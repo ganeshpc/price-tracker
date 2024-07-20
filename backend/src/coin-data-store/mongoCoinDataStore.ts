@@ -9,8 +9,14 @@ class MongoCoinDataStore implements ICoinDataStore {
     CoinDataMongoModel.insertMany(coinData);
   }
 
-  async getCoinData(symbol: string): Promise<ICoinData[] | null> {
-    throw new Error('Method not implemented.');
+  async getLatestCoinData(
+    symbol: string,
+    limit: number
+  ): Promise<ICoinData[] | null> {
+    const coinData = await CoinDataMongoModel.find({ symbol })
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    return coinData;
   }
 }
 
