@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import logger from './utils/winston.config';
 
 import app from './app';
+import coinPricePoller from './utils/coinPricePoller';
 
 const PORT = process.env.PORT ?? 9000;
 
@@ -19,6 +20,9 @@ const main = async () => {
     }
     await mongoose.connect(process.env.MONGO_URI);
     logger.info('connected to mongodb');
+
+    // start the coin price poller
+    coinPricePoller.startPolling();
 
     app.listen(PORT, () => {
       logger.info(`api server listening on port: ${PORT}`);
