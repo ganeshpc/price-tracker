@@ -39,6 +39,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - /var/lib/mongodb/data
+    logging:
+      driver: "none"
   
   mongo-express:
     image: mongo-express
