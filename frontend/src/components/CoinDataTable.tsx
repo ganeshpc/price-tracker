@@ -29,9 +29,13 @@ const EnhancedTableToolbar = () => {
         id="tableTitle"
         component="div"
       ></Typography>
-      <Tooltip title="Filter list">
-        <Button variant="contained" onClick={() => dispatch(fetchCoins())}>
-          Filter
+      <Tooltip title="Select Symbol">
+        <Button
+          variant="contained"
+          sx={{ width: '250px' }}
+          onClick={() => dispatch(fetchCoins())}
+        >
+          Select Symbol
         </Button>
       </Tooltip>
     </Toolbar>
@@ -63,8 +67,12 @@ const CoinDataTable = () => {
   return (
     <Box sx={{ width: '100%' }}>
       <EnhancedTableToolbar />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <TableContainer component={Paper} sx={{ maxHeight: '75vh' }}>
+        <Table
+          sx={{ minWidth: 700 }}
+          stickyHeader
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell>Name</StyledTableCell>

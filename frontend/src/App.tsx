@@ -25,7 +25,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Header></Header>
-        <div style={{ height: '100px' }}></div>
+        <div style={{ height: '60px' }}></div>
 
         <CoinDataTable></CoinDataTable>
       </Provider>
