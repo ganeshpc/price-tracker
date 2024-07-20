@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 
 import priceRoutes from './routes/priceRoutes';
+import coinRoutes from './routes/coinRoutes';
 
 const app = express();
 
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/prices', priceRoutes);
+app.use('/api/coins', coinRoutes);
 
 app.get('/health', (req, res) => {
   console.info('GET /health health check');
