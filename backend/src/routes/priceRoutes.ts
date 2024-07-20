@@ -12,7 +12,6 @@ router.get('/:symbol', async (req, res) => {
 
   const coinData = await mongoCoinDataStore.getLatestCoinData(symbol, 20);
 
-  console.log(coinData);
   return res.json(coinData);
 });
 

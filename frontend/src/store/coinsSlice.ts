@@ -7,6 +7,7 @@ export interface Coin {
   name: string;
   symbol: string;
   price: number;
+  createdAt: string;
 }
 
 export interface CoinState {
@@ -16,14 +17,19 @@ export interface CoinState {
 }
 
 const initialState: CoinState = {
-  currentCoin: null,
+  currentCoin: 'BTC',
   coins: [],
   status: 'idle',
 };
 
-export const fetchCoins: any = createAsyncThunk<Coin[], string>(
+export const fetchCoins: any = createAsyncThunk<Coin[], void>(
   'coins/fetchCoins',
-  async (symbol: string) => {
+  async (_, { getState }) => {
+    const state: any = getState();
+    const symbol = state.coinsReducer.currentCoin;
+    if (symbol === null) {
+      return [];
+    }
     const coins = await coinService.fetchCoins(symbol);
     return coins;
   }
