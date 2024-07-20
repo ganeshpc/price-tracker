@@ -38,7 +38,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
-      - /var/lib/mongodb/data
+      - /data/db
     logging:
       driver: "none"
   
