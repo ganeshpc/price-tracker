@@ -6,12 +6,17 @@ import coinsToWatch from '../utils/coinsToWatch';
 import logger from '../utils/winston.config';
 
 class Coinwatch implements ICoinDataSource {
+  coinwatchEndpoint =
+    process.env.COINWATCH_API_ENDPOINT ||
+    'https://api.livecoinwatch.com/coins/map';
+
+  constructor() {
+    logger.info('Coinwatch API Initialized');
+  }
+
   async getCoinData(): Promise<ICoinData[]> {
-    logger.info('porcess.env.COINWATCH_API_KEY', {
-      key: process.env.COINWATCH_API_KEY,
-    });
     const response = await axios.post(
-      'https://api.livecoinwatch.com/coins/map',
+      this.coinwatchEndpoint,
       {
         codes: coinsToWatch,
         currency: 'USD',
@@ -31,7 +36,7 @@ class Coinwatch implements ICoinDataSource {
 
     const responseCoins = response.data;
 
-    const coins = responseCoins.map((coin: any) => ({
+    const coins: ICoinData[] = responseCoins.map((coin: any) => ({
       id: coin.code,
       name: coin.code,
       symbol: coin.code,

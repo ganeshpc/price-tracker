@@ -1,3 +1,5 @@
+// Purpose: Model for storing coin data in MongoDB.
+
 import { Schema, model, Document } from 'mongoose';
 
 interface CoinData extends Document {
