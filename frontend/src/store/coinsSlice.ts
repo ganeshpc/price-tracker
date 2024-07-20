@@ -17,7 +17,7 @@ export interface CoinState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
-const initialState: CoinState = {
+export const initialState: CoinState = {
   currentCoin: '',
   coins: [],
   availableCoins: [],
