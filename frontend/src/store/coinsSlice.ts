@@ -29,7 +29,7 @@ export const fetchCoins: any = createAsyncThunk<Coin[], void>(
   async (_, { getState }) => {
     const state: any = getState();
     const symbol = state.coinsReducer.currentCoin;
-    if (symbol === null) {
+    if (!symbol) {
       return [];
     }
     const coins = await coinService.fetchCoinData(symbol);

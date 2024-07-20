@@ -138,6 +138,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const CoinDataTable = () => {
   const coins = useSelector((state: RootState) => state.coinsReducer.coins);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    setInterval(() => {
+      dispatch(fetchCoins());
+    }, 2000);
+  }, []);
 
   return (
     <Box sx={{ width: '100%' }}>
