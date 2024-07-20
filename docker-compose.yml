@@ -13,7 +13,7 @@ services:
       - /workdir/app/node_modules
     environment:
       - NODE_ENV=development
-      - MONGO_URI=mongodb://admin:password@api-server-mongodb
+      - MONGO_URI=mongodb://admin:password@mongodb
     command: sh -c "npm ci && npm run start:dev"
 
   frontend:
