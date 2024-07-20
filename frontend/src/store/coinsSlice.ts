@@ -13,12 +13,14 @@ export interface Coin {
 export interface CoinState {
   currentCoin: string | null;
   coins: Coin[];
+  availableCoins: string[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
 const initialState: CoinState = {
-  currentCoin: 'BTC',
+  currentCoin: '',
   coins: [],
+  availableCoins: [],
   status: 'idle',
 };
 
@@ -30,7 +32,15 @@ export const fetchCoins: any = createAsyncThunk<Coin[], void>(
     if (symbol === null) {
       return [];
     }
-    const coins = await coinService.fetchCoins(symbol);
+    const coins = await coinService.fetchCoinData(symbol);
+    return coins;
+  }
+);
+
+export const fetchAvailableCoins: any = createAsyncThunk<string[], void>(
+  'coins/fetchAvailableCoins',
+  async () => {
+    const coins = await coinService.fetchAvailableCoins();
     return coins;
   }
 );
@@ -58,6 +68,13 @@ const coinsSlice = createSlice({
       .addCase(fetchCoins.rejected, (state) => {
         state.status = 'failed';
       });
+
+    builder.addCase(
+      fetchAvailableCoins.fulfilled,
+      (state, action: PayloadAction<string[]>) => {
+        state.availableCoins = action.payload;
+      }
+    );
   },
 });
 
