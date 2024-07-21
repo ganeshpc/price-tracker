@@ -1,3 +1,5 @@
+// Purpose: Coinwatch API data source class.
+
 import axios from 'axios';
 
 import ICoinData from '../models/ICoinData';
@@ -15,35 +17,40 @@ class Coinwatch implements ICoinDataSource {
   }
 
   async getCoinData(): Promise<ICoinData[]> {
-    const response = await axios.post(
-      this.coinwatchEndpoint,
-      {
-        codes: coinsToWatch,
-        currency: 'USD',
-        sort: 'rank',
-        order: 'ascending',
-        offset: 0,
-        limit: 0,
-        meta: true,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.COINWATCH_API_KEY,
+    try {
+      const response = await axios.post(
+        this.coinwatchEndpoint,
+        {
+          codes: coinsToWatch,
+          currency: 'USD',
+          sort: 'rank',
+          order: 'ascending',
+          offset: 0,
+          limit: 0,
+          meta: true,
         },
-      }
-    );
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': process.env.COINWATCH_API_KEY,
+          },
+        }
+      );
 
-    const responseCoins = response.data;
+      const responseCoins = response.data;
 
-    const coins: ICoinData[] = responseCoins.map((coin: any) => ({
-      id: coin.code,
-      name: coin.code,
-      symbol: coin.code,
-      price: coin.rate,
-    }));
+      const coins: ICoinData[] = responseCoins.map((coin: any) => ({
+        id: coin.code,
+        name: coin.code,
+        symbol: coin.code,
+        price: coin.rate,
+      }));
 
-    return coins;
+      return coins;
+    } catch (error) {
+      logger.error('Error getting coin data from Coinwatch', { error });
+      return [];
+    }
   }
 }
 
