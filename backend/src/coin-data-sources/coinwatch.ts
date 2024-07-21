@@ -1,6 +1,6 @@
 // Purpose: Coinwatch API data source class.
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import ICoinData from '../models/ICoinData';
 import ICoinDataSource from './ICointDataSource';
@@ -47,8 +47,11 @@ class Coinwatch implements ICoinDataSource {
       }));
 
       return coins;
-    } catch (error) {
+    } catch (error: AxiosError | any) {
       logger.error('Error getting coin data from Coinwatch', { error });
+      if (error.response.status === 401) {
+        logger.error('Coinwatch API key is invalid');
+      }
       return [];
     }
   }

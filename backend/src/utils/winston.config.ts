@@ -1,3 +1,5 @@
+// Purpose: Winston logger configuration.
+
 import { Logger, createLogger, format, transports } from 'winston';
 
 const logLevel = process.env.NODE_ENV === 'development' ? 'debug' : 'info';

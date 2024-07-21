@@ -4,7 +4,7 @@ interface ICoinData {
   name: string;
   symbol: string;
   price: number;
-  timestamp?: Date;
+  createdAt?: Date;
 }
 
 export default ICoinData;

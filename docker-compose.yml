@@ -14,6 +14,7 @@ services:
     environment:
       - NODE_ENV=development
       - MONGO_URI=mongodb://admin:password@mongodb
+      - COINWATCH_API_KEY=fdbf968c-7a97-4c40-bb10-1fec8aa206d7
     command: sh -c "npm ci && npm run start:dev"
 
   frontend:
@@ -44,6 +45,8 @@ services:
   
   mongo-express:
     image: mongo-express
+    depends_on:
+      - mongodb
     restart: always
     ports:
       - 8081:8081

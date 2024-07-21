@@ -1,3 +1,5 @@
+// Purpose: Polls the coin data source at a set interval and saves the data to the database.
+
 import logger from './winston.config';
 import ICoinDataSource from '../coin-data-sources/ICointDataSource';
 import coinwatch from '../coin-data-sources/coinwatch';
@@ -9,11 +11,13 @@ class CoinPricePoller {
   pollingFrequency: number;
 
   constructor() {
+    logger.info('CoinPricePoller initialized');
     this.coinDataSource = coinwatch;
-    this.pollingFrequency = 10000;
+    this.pollingFrequency = 20000;
   }
 
   startPolling() {
+    logger.info('starting CoinPricePoller');
     this.pollingInterval = setInterval(async () => {
       logger.debug('polling coin data source');
       const coins = await this.coinDataSource.getCoinData();
@@ -22,6 +26,7 @@ class CoinPricePoller {
   }
 
   stop() {
+    logger.info('stopping CoinPricePoller');
     if (this.pollingInterval) {
       clearInterval(this.pollingInterval);
     }

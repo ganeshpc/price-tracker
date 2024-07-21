@@ -1,3 +1,5 @@
+// Purpose: Interface for the storing coin data.
+
 import ICoinData from '../models/ICoinData';
 
 interface ICoinDataStore {

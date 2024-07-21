@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import priceRoutes from './routes/priceRoutes';
 import coinRoutes from './routes/coinRoutes';
+import logger from './utils/winston.config';
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.get('/health', (req, res) => {
 
 // final error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log('final error handler', err);
+  logger.error('final error handler', err);
   return res.status(500).json({
     status: 'error',
     message: 'Internal server error',
