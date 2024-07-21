@@ -13,7 +13,7 @@ class CoinPricePoller {
   constructor() {
     logger.info('CoinPricePoller initialized');
     this.coinDataSource = coinwatch;
-    this.pollingFrequency = 20000;
+    this.pollingFrequency = process.env.PRICE_POLLING_FREQUENCY ? parseInt(process.env.PRICE_POLLING_FREQUENCY) : 5000;
   }
 
   startPolling() {
