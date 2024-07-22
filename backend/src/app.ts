@@ -9,6 +9,8 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => { logger.debug('req.url: ', req.url); next(); });
+
 if (process.env.NODE_ENV === 'development') {
   app.use(cors());
 }
