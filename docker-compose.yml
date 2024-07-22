@@ -6,12 +6,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: base
-    ports:
-      - "9000:9000"
     volumes:
       - ./backend:/workdir/app
       - /workdir/app/node_modules
     environment:
+      - PORT=9000
       - NODE_ENV=development
       - MONGO_URI=mongodb://admin:password@mongodb
       - COINWATCH_API_KEY=fdbf968c-7a97-4c40-bb10-1fec8aa206d7
@@ -28,13 +27,12 @@ services:
       - ./frontend:/workdir/app
       - /workdir/app/node_modules
     environment:
+      - VITE_API_SERVER_BASE_URL=http://backend:9000
       - NODE_ENV=development
     command: sh -c "npm install && npm run dev --host"
 
   mongodb:
     image: mongo:latest
-    ports:
-      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
@@ -55,3 +53,5 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_URL=mongodb://admin:password@mongodb
       - ME_CONFIG_BASICAUTH=false
+    logging:
+      driver: "none"
