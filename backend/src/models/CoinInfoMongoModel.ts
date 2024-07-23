@@ -26,7 +26,7 @@ export interface CoinInfo extends Document {
 const coinInfoSchema = new Schema<CoinInfo>(
   {
     name: { type: String, required: true },
-    symbol: { type: String, required: true },
+    symbol: { type: String, required: true, unique: true },
     rank: { type: Number },
     age: { type: Number },
     png32: { type: String },
