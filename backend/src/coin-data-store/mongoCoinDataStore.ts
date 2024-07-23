@@ -21,12 +21,12 @@ class MongoCoinDataStore implements ICoinDataStore {
   }
 
   async saveCoinInfo(coinInfo: CoinInfo): Promise<void> {
-    logger.info('saving coin info to mongo', { coinInfo });
+    logger.info('saving coin info to mongo');
     CoinInfoMongoModel.create(coinInfo);
   }
 
   async saveCoinInfos(coinInfos: CoinInfo[]): Promise<void> {
-    logger.info('saving coin infos to mongo', { coinInfos });
+    logger.info('saving coin infos to mongo');
     CoinInfoMongoModel.insertMany(coinInfos);
   }
 }
