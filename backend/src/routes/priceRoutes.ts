@@ -8,7 +8,7 @@ const router = Router();
 router.get(
   '/:symbol',
   async (req: Request, res: Response, next: NextFunction) => {
-    logger.info('GET /api/prices/:symbol', { params: req.params });
+    logger.debug('GET /api/prices/:symbol', { params: req.params });
     const { symbol } = req.params;
 
     try {

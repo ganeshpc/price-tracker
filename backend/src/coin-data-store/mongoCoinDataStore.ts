@@ -6,7 +6,7 @@ import CoinInfoMongoModel, { CoinInfo } from '../models/CoinInfoMongoModel';
 
 class MongoCoinDataStore implements ICoinDataStore {
   async saveCoinData(coinData: ICoinData[]): Promise<void> {
-    logger.info('saving coin data to mongo', { coinData });
+    logger.debug('saving coin data to mongo');
     CoinDataMongoModel.insertMany(coinData);
   }
 
@@ -21,12 +21,12 @@ class MongoCoinDataStore implements ICoinDataStore {
   }
 
   async saveCoinInfo(coinInfo: CoinInfo): Promise<void> {
-    logger.info('saving coin info to mongo');
+    logger.debug('saving coin info to mongo');
     CoinInfoMongoModel.create(coinInfo);
   }
 
   async saveCoinInfos(coinInfos: CoinInfo[]): Promise<void> {
-    logger.info('saving coin infos to mongo');
+    logger.debug('saving coin infos to mongo');
     CoinInfoMongoModel.insertMany(coinInfos);
   }
 }

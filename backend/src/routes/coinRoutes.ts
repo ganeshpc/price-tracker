@@ -6,7 +6,7 @@ import coinsToWatch from '../utils/coinsToWatch';
 const router = Router();
 
 router.get('/', async (req, res) => {
-  logger.info('GET /api/coins', { params: req.params });
+  logger.debug('GET /api/coins', { params: req.params });
 
   return res.json(coinsToWatch);
 });

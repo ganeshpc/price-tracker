@@ -9,7 +9,10 @@ const app = express();
 
 app.use(express.json());
 
-app.use((req, res, next) => { logger.debug('req.url: ', req.url); next(); });
+app.use((req, res, next) => {
+  logger.debug('req.url: ', req.url);
+  next();
+});
 
 if (process.env.NODE_ENV === 'development') {
   app.use(cors());
@@ -19,7 +22,7 @@ app.use('/api/prices', priceRoutes);
 app.use('/api/coins', coinRoutes);
 
 app.get('/health', (req, res) => {
-  console.info('GET /health health check');
+  console.debug('GET /health health check');
   return res.json({
     status: 'ok',
   });
