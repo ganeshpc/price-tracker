@@ -35,6 +35,8 @@ Access webapp at: localhost:5173
 ```
 docker-compose up
 
+if docker-compose throwing error then try: `docker-compose down` before `docker-compose up`
+
 Access webapp at: localhost:5173
 ```
 

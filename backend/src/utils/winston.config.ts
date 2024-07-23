@@ -10,8 +10,12 @@ const logger: Logger = createLogger({
     format.colorize(),
     format.timestamp(),
     format.json(),
-    format.printf(({ timestamp, level, message }) => {
-      return `[${timestamp}] ${level}: ${message}`;
+    format.printf(({ timestamp, level, message, ...meta }) => {
+      let logMessage = message;
+      if (Object.keys(meta).length > 0) {
+        logMessage += ` ${JSON.stringify(meta, null, 2)}`;
+      }
+      return `[${timestamp}] ${level}: ${logMessage}`;
     })
   ),
   transports: [
