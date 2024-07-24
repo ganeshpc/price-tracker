@@ -10,11 +10,33 @@ export interface Coin {
   createdAt: string;
 }
 
+export interface CoinInfo {
+  name: string;
+  symbol: string;
+  rank: number;
+  age: number; // in days
+  png32: string;
+  png64: string;
+  webp32: string;
+  webp64: string;
+  exchanges: number; // number exchanges on which the coin is listed
+  markets: number; // number of markets on which the coin is listed
+  pairs: number; // number of unique market coin is present
+  allTimeHighUSD: number;
+  circulatingSupply: number; // circulating supply of the coin
+  totalSupply: number; // number of coins minted, including locked
+  maxSupply: number; // maximum number of coins that can be minted
+  categories: string[]; // array of category strings
+  volume: number;
+  cap: number;
+}
+
 export interface CoinState {
   currentCoin: string | null;
   coins: Coin[];
   availableCoins: string[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  coinInfos: CoinInfo[];
 }
 
 export const initialState: CoinState = {
@@ -22,6 +44,7 @@ export const initialState: CoinState = {
   coins: [],
   availableCoins: [],
   status: 'idle',
+  coinInfos: [],
 };
 
 export const fetchCoins: any = createAsyncThunk<Coin[], void>(
@@ -42,6 +65,14 @@ export const fetchAvailableCoins: any = createAsyncThunk<string[], void>(
   async () => {
     const coins = await coinService.fetchAvailableCoins();
     return coins;
+  }
+);
+
+export const fetchCoinInfos: any = createAsyncThunk<CoinInfo[], void>(
+  'coins/fetchCoinInfos',
+  async () => {
+    const coinInfos = await coinService.fetchCoinInfos();
+    return coinInfos;
   }
 );
 
@@ -75,7 +106,14 @@ const coinsSlice = createSlice({
         state.availableCoins = action.payload;
       }
     );
-  },
+
+    builder.addCase(
+      fetchCoinInfos.fulfilled,
+      (state, action: PayloadAction<CoinInfo[]>) => {
+        state.coinInfos = action.payload;
+      }
+    );
+  s,
 });
 
 export const { setCurrentCoin, setCoins } = coinsSlice.actions;

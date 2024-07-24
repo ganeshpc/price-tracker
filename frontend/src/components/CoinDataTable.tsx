@@ -25,6 +25,8 @@ import {
   fetchCoins,
   setCurrentCoin,
   fetchAvailableCoins,
+  fetchCoinInfos,
+  CoinInfo,
 } from '../store/coinsSlice';
 import { useEffect, useState } from 'react';
 
@@ -34,11 +36,13 @@ const EnhancedTableToolbar = () => {
   );
   const currentCoin = useSelector(
     (state: RootState) => state.coinsReducer.currentCoin
-  );
+); 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchAvailableCoins());
+    console.log('fetching coin infos');
+    dispatch(fetchCoinInfos());
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -138,6 +142,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const CoinDataTable = () => {
   const coins = useSelector((state: RootState) => state.coinsReducer.coins);
+  const coinInfos: CoinInfo[] = useSelector((state: RootState) => state.coinsReducer.coinInfos);
+  const coinInfo = coinInfos.find((coinInfo) => coinInfo.symbol === coins[0]?.symbol);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -166,8 +172,11 @@ const CoinDataTable = () => {
           <TableBody>
             {coins.map((row) => (
               <StyledTableRow key={row.id}>
+                <StyledTableCell>
+                  <img src={coinInfo?.png32} alt={coinInfo.name} style={{ width: 24, height: 24 }} />
+                </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
-                  {row.name}
+                  {coinInfo.name}
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.symbol}</StyledTableCell>
                 <StyledTableCell align="right">{row.price}</StyledTableCell>

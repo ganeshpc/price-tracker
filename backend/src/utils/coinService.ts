@@ -34,6 +34,21 @@ class CoinService {
       logger.error(`Error saving coin info: ${error}`);
     }
   }
+
+  async getInfos(): Promise<CoinInfo[]> {
+    try {
+      const coinInfos = await this.coinDataStore.getCoinInfos();
+
+      if (coinInfos === null) {
+        return [];
+      }
+
+      return coinInfos;
+    } catch (error) {
+      logger.error(`Error getting coin infos: ${error}`);
+      return [];
+    }
+  }
 }
 
 export default new CoinService();

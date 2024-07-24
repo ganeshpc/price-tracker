@@ -8,6 +8,8 @@ interface ICoinDataStore {
   getLatestCoinData(symbol: string, limit: number): Promise<ICoinData[] | null>;
   saveCoinInfo(coinInfo: CoinInfo): Promise<void>;
   saveCoinInfos(coinInfos: CoinInfo[]): Promise<void>;
+  getCoinInfo(symbol: string): Promise<CoinInfo | null>;
+  getCoinInfos(): Promise<CoinInfo[]>;
 }
 
 export default ICoinDataStore;

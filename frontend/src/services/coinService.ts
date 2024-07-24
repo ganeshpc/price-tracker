@@ -17,3 +17,8 @@ export const fetchAvailableCoins = async (): Promise<string[]> => {
   const response = await axiosService.get('/api/coins');
   return response.data;
 };
+
+export const fetchCoinInfos = async (): Promise<any> => {
+  const response = await axiosService.get(`/api/coins/info`);
+  return response.data;
+}
