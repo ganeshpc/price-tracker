@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { Server } from 'http';
 import mongoose from 'mongoose';
 
 import logger from './utils/winston.config';
@@ -8,8 +9,9 @@ import logger from './utils/winston.config';
 import app from './app';
 import coinPricePoller from './utils/coinPricePoller';
 import coinService from './utils/coinService';
+import SocketManager from './socket/SocketManager';
 
-const PORT = process.env.PORT ?? 9000;
+const PORT = process.env.PORT ?? 9001;
 
 const main = async () => {
   try {
@@ -28,9 +30,13 @@ const main = async () => {
     // start the coin price poller
     coinPricePoller.startPolling();
 
-    app.listen(PORT, () => {
+    const appServer: Server = app.listen(PORT, () => {
       logger.info(`api server listening on port: ${PORT}`);
     });
+
+    const socketManager = new SocketManager(appServer);
+
+
   } catch (error) {
     logger.error('error starting server', error);
     process.exit(1);

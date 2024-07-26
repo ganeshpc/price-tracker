@@ -2,9 +2,12 @@ import { Server as HttpServer } from "http";
 
 import { Server } from "socket.io";
 
+import coinPricePoller from "../utils/coinPricePoller";
+
 class SocketManager {
 
     io: Server;
+
 
     constructor(httpServer: HttpServer) {
         this.io = new Server(httpServer);
@@ -14,6 +17,10 @@ class SocketManager {
             setInterval(() => {
                 socket.emit('message', 'hello');
             }, 1000);
+
+            coinPricePoller.on('priceData', (data) => {
+                socket.emit('priceData', data);
+            });
 
             socket.on('disconnect', () => {
                 console.log('user disconnected');
