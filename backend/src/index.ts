@@ -25,7 +25,7 @@ const main = async () => {
     logger.info('connected to mongodb');
 
     // save initial coin info
-    await coinService.fetchAndSaveCoinInfo();
+    // await coinService.fetchAndSaveCoinInfo();
 
     // start the coin price poller
     coinPricePoller.startPolling();

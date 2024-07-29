@@ -13,18 +13,18 @@ class CoinPricePoller extends EventEmitter {
 
   constructor() {
     super();
-    logger.info('CoinPricePoller initialized');
     this.coinDataSource = coinwatch;
+    
     this.pollingFrequency = process.env.PRICE_POLLING_FREQUENCY ? parseInt(process.env.PRICE_POLLING_FREQUENCY) : 5000;
+    logger.info('CoinPricePoller initialized');
   }
 
   startPolling() {
     logger.info('starting CoinPricePoller');
-    this.pollingInterval = setInterval(async () => this.pollData, this.pollingFrequency);
+    this.pollingInterval = setInterval(() => this.pollData(), this.pollingFrequency);
   }
 
   async pollData() {
-    logger.debug('polling coin data source');
     const coins = await this.coinDataSource.getCoinData();
     mongoCoinDataStore.saveCoinData(coins);
 
