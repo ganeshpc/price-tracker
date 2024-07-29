@@ -4,7 +4,7 @@ import { CoinState, initialState } from './coinsSlice';
 export const persistStateMiddleware: Middleware =
   (store) => (next) => (action) => {
     const result = next(action);
-    const state = store.getState().coinsReducer;
+    const state = store.getState();
     localStorage.setItem('reduxState', JSON.stringify(state));
     return result;
   };
@@ -15,7 +15,7 @@ export const loadState = (): CoinState => {
     if (serializedState === null) {
       return initialState;
     }
-    return JSON.parse(serializedState) as CoinState;
+    return JSON.parse(serializedState);
   } catch (err) {
     console.error('Could not load state from localStorage:', err);
     return initialState;
