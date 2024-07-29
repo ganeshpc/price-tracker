@@ -27,6 +27,7 @@ import {
   fetchAvailableCoins,
 } from '../store/coinsSlice';
 import { useEffect, useState } from 'react';
+import SocketManager from '../socket/SocketManager';
 
 const EnhancedTableToolbar = () => {
   const availableCoins = useSelector(
@@ -141,9 +142,17 @@ const CoinDataTable = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    const socket = SocketManager.getInstance();
+
     setInterval(() => {
       dispatch(fetchCoins());
     }, 2000);
+
+    socket.connect();
+
+    return () => {
+      socket.disconnect();
+    }
   }, []);
 
   return (

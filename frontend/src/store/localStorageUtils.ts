@@ -4,7 +4,7 @@ import { CoinState, initialState } from './coinsSlice';
 export const persistStateMiddleware: Middleware =
   (store) => (next) => (action) => {
     const result = next(action);
-    const state = store.getState();
+    const state = store.getState().coinsReducer;
     localStorage.setItem('reduxState', JSON.stringify(state));
     return result;
   };

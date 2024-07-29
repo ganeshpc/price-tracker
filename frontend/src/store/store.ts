@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import coinsReducer, { CoinState } from './coinsSlice';
 import { loadState, persistStateMiddleware } from './localStorageUtils';
+import socketReducer, { SocketState } from './socketSlice';
 
 const preloadedState: CoinState = loadState();
 
 export const store = configureStore({
   reducer: {
     coinsReducer,
+    socketReducer 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(persistStateMiddleware),

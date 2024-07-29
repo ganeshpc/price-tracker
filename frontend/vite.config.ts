@@ -14,7 +14,12 @@ export default defineConfig({
       '/api': {
         target: process.env.VITE_API_SERVER_BASE_URL,
         changeOrigin: true
-      }
-    }
+      },
+      '/socket.io': {
+        target: process.env.VITE_API_SERVER_BASE_URL,
+        changeOrigin: true,
+        ws: true, // Enable WebSocket proxying
+      },
+    },
   }
 })
