@@ -13,7 +13,6 @@ services:
       - PORT=9000
       - NODE_ENV=development
       - MONGO_URI=mongodb://admin:password@mongodb
-      - COINWATCH_API_KEY=your_coinwatch_api_key
     command: sh -c "npm ci && npm run start:dev"
 
   frontend:

@@ -33,6 +33,8 @@ Access webapp at: localhost:5173
 ### With Docker
 
 ```
+// put the coinwatch api key in the backend env file or you can put it in the docker-compose file 
+
 docker-compose up
 
 if docker-compose throwing error then try: `docker-compose down` before `docker-compose up`
