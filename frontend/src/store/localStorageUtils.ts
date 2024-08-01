@@ -15,7 +15,7 @@ export const loadState = (): CoinState => {
     if (serializedState === null) {
       return initialState;
     }
-    return JSON.parse(serializedState) as CoinState;
+    return JSON.parse(serializedState);
   } catch (err) {
     console.error('Could not load state from localStorage:', err);
     return initialState;
